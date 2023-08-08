@@ -18,7 +18,12 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(example_interfaces REQUIRED)
+
+find_package(sensor_msgs REQUIRED)
+find_package(std_msgs REQUIRED)
+
+find_package(ublox_msgs REQUIRED)
+find_package(ublox_serialization REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -30,5 +35,26 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+
+include_directories(
+  include/ublox_status_monitor
+)
+
+add_executable(fix_monitor
+  src/ublox_status_monitor_node.cpp
+  src/ublox_monitor.cpp
+)
+
+ament_target_dependencies(fix_monitor
+  rclcpp
+  "ublox_msgs"
+  "ublox_serialization"
+)
+
+install(TARGETS
+  fix_monitor
+  DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()
