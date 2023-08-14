@@ -22,7 +22,7 @@ void UbloxStatusMonitor::_topic_callback(const ublox_msgs::msg::NavPVT::SharedPt
       break;
   }
 
-  RCLCPP_INFO(this->get_logger(), fix_status);
+  RCLCPP_INFO(this->get_logger(), "status : %s, numSV : %2d",fix_status.c_str(),msg->num_sv);
 }
 
 UbloxStatusMonitor::UbloxStatusMonitor(
